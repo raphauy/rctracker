@@ -14,6 +14,7 @@ export type DevelopmentDAO = {
 export const developmentSchema = z.object({
 	comments: z.string().optional(),
 	actualHours: z.coerce.number(),
+  date: z.date(),
 	taskId: z.string({required_error: "taskId is required."}),
 })
 
@@ -89,4 +90,15 @@ export async function getFullDevelopmentDAO(id: string) {
   })
   return found as DevelopmentDAO
 }
-    
+
+export async function setDevelopmentDate(id: string, date: Date) {
+  const updated = await prisma.development.update({
+    where: {
+      id
+    },
+    data: {
+      date
+    }
+  })
+  return updated
+}

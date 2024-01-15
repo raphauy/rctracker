@@ -1,5 +1,6 @@
 "use client"
 
+import { setDevelopmentDateAction } from "@/app/admin/developments/development-actions"
 import { DeleteDevelopmentDialog, DevelopmentDialog, TitleDevelopmentDialog } from "@/app/admin/developments/development-dialogs"
 import { setDateAction } from "@/app/admin/tasks/task-actions"
 import { DeleteTaskDialog, TaskDialog } from "@/app/admin/tasks/task-dialogs"
@@ -50,7 +51,7 @@ export function TaskDisplay({ task, isAdmin }: MailDisplayProps) {
         setLoading(false)
       })
     }
-  }  
+  }
 
   return (
     <div className="flex h-full flex-col">
@@ -155,7 +156,6 @@ export function TaskDisplay({ task, isAdmin }: MailDisplayProps) {
                     task?.developments?.map((development) => (
                       <div key={development.id} className="flex items-center justify-between">
                         <TitleDevelopmentDialog development={development} disabled={!task || !isAdmin} />
-
                         <DeleteDevelopmentDialog id={development.id} description={`Are you sure you want to delete ${development.date}?`} disabled={!task || !isAdmin} />
                       </div>
                     ))

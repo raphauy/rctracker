@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Loader } from "lucide-react"
+import { Calendar } from "@/components/ui/calendar"
+import { es } from "date-fns/locale"
 
 type Props= {
   id?: string
@@ -20,7 +22,9 @@ type Props= {
 export function DevelopmentForm({ id, taskId, closeDialog }: Props) {
   const form = useForm<DevelopmentFormValues>({
     resolver: zodResolver(developmentSchema),
-    defaultValues: {},
+    defaultValues: {
+      date: new Date(),
+    },
     mode: "onChange",
   })
   const [loading, setLoading] = useState(false)
@@ -79,6 +83,22 @@ export function DevelopmentForm({ id, taskId, closeDialog }: Props) {
               </FormItem>
             )}
           />
+
+
+          <FormField
+            control={form.control}
+            name="date"
+            render={({ field }) => (
+              <Calendar
+              mode="single"
+              selected={field.value}
+              onSelect={field.onChange}
+              disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+              locale={es}
+            />
+            )}
+          />
+
 
         <div className="flex justify-end">
             <Button onClick={() => closeDialog()} type="button" variant={"secondary"} className="w-32">Cancel</Button>
