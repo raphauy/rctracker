@@ -38,7 +38,7 @@ export function TaskComponent({
   selectedProject,
   projects,
   deliverables,
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [265, 655, 440],
   defaultCollapsed = false,
   navCollapsedSize,
 }: ProjectProps) {
