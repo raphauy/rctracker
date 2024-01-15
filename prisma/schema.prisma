@@ -1,0 +1,134 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  role          String    @default("user") // gennext: skip.zod
+  emailVerified DateTime? // gennext: skip.zod
+  image         String? // gennext: skip.zod
+  accounts      Account[] // gennext: skip.list
+  sessions      Session[] // gennext: skip.list
+  clientId      String? // gennext: skip.zod
+  client        Client? @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique // gennext: skip.zod
+  userId       String   // gennext: skip.zod
+  expires      DateTime // gennext: skip.zod
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+
+model Client {
+  id       String     @id @default(cuid())
+  name     String             // gennext: show.column
+  slug     String     @unique // gennext: show.column
+
+  createdAt DateTime  @default(now()) // gennext: skip.zod
+  
+  users    User[] 
+  projects Project[] // gennext: skip.list
+}
+
+model Project {
+  id             String       @id @default(cuid())
+  name           String // gennext: show.column
+  description    String? // gennext: show.column
+  estimatedHours Int          @default(0)// gennext: skip.zod show.column
+  actualHours    Int          @default(0)// gennext: skip.zod show.column
+
+  createdAt      DateTime     @default(now())// gennext: skip.zod
+  updatedAt      DateTime     @updatedAt// gennext: skip.zod
+
+  clientId       String // gennext: skip.zod
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  deliverables   Deliverable[]
+
+  @@unique([name, clientId]) // gennext: skip.list
+}
+
+model Deliverable {
+  id             String    @id @default(cuid())
+  name           String // gennext: show.column
+  description    String? // gennext: show.column
+  hourValue      Int       @default(0)// gennext: skip.zod show.column
+  estimatedHours Int       @default(0) // gennext: skip.zod show.column
+  actualHours    Int       @default(0) // gennext: skip.zod show.column
+
+  createdAt      DateTime  @default(now()) // gennext: skip.zod
+  updatedAt      DateTime  @updatedAt // gennext: skip.zod
+
+  projectId      String // gennext: skip.zod
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  tasks          Task[]
+
+  @@unique([name, projectId]) // gennext: skip.list
+}
+
+model Task {
+  id                  String    @id @default(cuid())
+  title               String // gennext: show.column
+  description         String? // gennext: show.column
+  dueDate             DateTime? // gennext: show.column
+  status              String    @default("pending") // gennext: show.column
+  estimatedHoursMin   Int   @default(0) // gennext: show.column
+  estimatedHoursMax   Int   @default(0) // gennext: show.column
+
+  createdAt      DateTime  @default(now()) // gennext: skip.zod
+  updatedAt      DateTime  @updatedAt // gennext: skip.zod
+
+  deliverableId  String
+  deliverable Deliverable @relation(fields: [deliverableId], references: [id], onDelete: Cascade)
+
+  developments    Development[]
+}
+
+model Development {
+  id              String    @id @default(cuid())
+  comments        String? // gennext: show.column
+  actualHours     Int // gennext: show.column
+  date            DateTime  @default(now()) // gennext: show.column skip.zod
+
+  taskId          String
+  task            Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
