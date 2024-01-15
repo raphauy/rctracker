@@ -8,7 +8,8 @@ import { redirect } from 'next/navigation'
 export default async function Home() {
 
   const currentUser= await getCurrentUser()
-  if (!currentUser) return <div>User not found</div>
+  if (!currentUser) 
+    redirect('/login')
 
   if (currentUser.role === 'admin') {
     redirect('/admin')
