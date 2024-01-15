@@ -119,7 +119,7 @@ export function TaskComponent({
             sizes
           )}`
         }}
-        className="h-full max-h-[800px] items-stretch"
+        className="h-full items-stretch"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
@@ -143,7 +143,11 @@ export function TaskComponent({
           <Separator />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30} className={cn(!deliverableSelected && "hidden")}>
+        <ResizablePanel 
+          defaultSize={defaultLayout[1]} 
+          minSize={30} 
+          className={cn(!deliverableSelected && "hidden")}
+        >
           <Tabs defaultValue="all">
             <div className="flex items-center justify-between px-4 py-2">
               <h1 className="text-xl font-bold">{deliverableSelected?.name}</h1>
@@ -205,7 +209,7 @@ export function TaskComponent({
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
+        <ResizablePanel defaultSize={defaultLayout[2]} minSize={30} className="max-h-[800px]">
           {
             taskSelected ? (
               <TaskDisplay
