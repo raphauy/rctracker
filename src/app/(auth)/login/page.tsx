@@ -4,6 +4,7 @@ import { Metadata } from "next"
 import getSession, { getCurrentUser } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { UserAuthForm } from "./user-auth-form"
+import { getClientDAO } from "@/services/client-services"
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -11,12 +12,17 @@ export const metadata: Metadata = {
 }
 
 export default async function AuthenticationPage() {
-  const session= await getSession()
   const user= await getCurrentUser()
   const role= user?.role
+  console.log("login: " + role)  
   if (role === "admin")
     redirect("/admin")
-  else if (role === "user")
+  else if (user && role === "client") {
+    const client= await getClientDAO(user.clientId)
+    const slug= client.slug
+    redirect(`/${slug}`)
+
+  } else if (role === "user")
     redirect("/")
 
     return (
