@@ -63,7 +63,7 @@ export function getNode(status: string) {
   const darkColor= getPostStatusColor(status)
 
   const res= (
-    <div className={cn("flex w-28 justify-center text-gray-700 font-bold items-center h-6 gap-1 rounded-2xl cursor-pointer")} style={{ backgroundColor: lightColor }}>
+    <div className={cn("flex w-28 justify-center  dark:text-white text-gray-700 font-bold items-center h-6 gap-1 rounded-2xl cursor-pointer")} style={{ backgroundColor: lightColor }}>
       <p className={cn("w-2 h-2 rounded-full")} style={{ backgroundColor: darkColor }}></p>
       <p>{status}</p>
     </div>

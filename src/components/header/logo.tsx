@@ -12,7 +12,7 @@ export default function Logo() {
     <Link href="/">
       <div className="text-3xl font-bold">
         <span className="text-first-color">rc</span>
-        <span className="text-black">tracker</span>
+        <span className="text-black dark:text-muted-foreground">tracker</span>
         <span className="text-gray-300">.dev</span>
       </div>
     </Link>

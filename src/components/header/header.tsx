@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import Logged from "./logged"
 import Logo from "./logo"
+import { ThemeToggle } from "../shadcn/theme-toggle"
 
 interface Props {  
     children: ReactNode
@@ -18,7 +19,8 @@ export default async function Header({ children }: Props) {
                 {children}
             </div>
             
-            <div>
+            <div className="flex items-center">
+                <ThemeToggle />
                 <Logged />
             </div>
         </div>
