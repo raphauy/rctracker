@@ -1,6 +1,6 @@
 
 export default function CostsPage() {
   return (
-    <div>No implementado</div>
+    <div className="mt-10">Not implemented</div>
   )
 }

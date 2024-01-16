@@ -17,10 +17,10 @@ export default async function ClientsMenu() {
             <nav>
                 <ul className="flex items-center">
                     <li className={`flex items-center border-b-first-color hover:border-b-first-color hover:border-b-2 h-11}`}>
-                        <Link href={`/${slug}`}><Button className="text-lg" variant="ghost">Proyectos</Button></Link>
+                        <Link href={`/${slug}`}><Button className="text-lg" variant="ghost">Projects</Button></Link>
                     </li>
                     <li className={`flex items-center border-b-first-color hover:border-b-first-color hover:border-b-2 h-11}`}>
-                        <Link href={`/${slug}/costs`}><Button className="text-lg" variant="ghost">Costos</Button></Link>
+                        <Link href={`/${slug}/billing`}><Button className="text-lg" variant="ghost">Billing</Button></Link>
                     </li>
                 </ul>
             </nav>
