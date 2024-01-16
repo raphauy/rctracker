@@ -1,10 +1,8 @@
 import { cookies } from "next/headers"
-import Image from "next/image"
 
 import { getCurrentUser } from "@/lib/auth"
 import { getDeliverablesDAOByProjectId } from "@/services/deliverable-services"
 import { getProjectsDAOBySlug } from "@/services/project-services"
-import { TaskDAO, getTasksDAOByDeliverableId } from "@/services/task-services"
 import { FolderKanban } from "lucide-react"
 import { TaskComponent } from "./components/task"
 
@@ -39,6 +37,8 @@ export default async function Page({ searchParams, params }: Props) {
   if (currentUser?.role === "admin") {
     isAdmin= true
   }
+  console.log(currentUser?.name)
+  
   const deliverables= projectId ? await getDeliverablesDAOByProjectId(projectId) : []
 
   let deliverableId= searchParams.d

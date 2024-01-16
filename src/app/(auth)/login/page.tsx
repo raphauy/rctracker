@@ -19,6 +19,7 @@ export default async function AuthenticationPage() {
     redirect("/admin")
   else if (user && role === "client") {
     const client= await getClientDAO(user.clientId)
+    console.log(client.name)    
     const slug= client.slug
     redirect(`/${slug}`)
 
