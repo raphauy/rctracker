@@ -5,6 +5,8 @@ import { UserDAO } from "@/services/user-services";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { DeleteUserDialog, UserDialog } from "./user-dialogs";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 export const columns: ColumnDef<UserDAO>[] = [
   {
@@ -56,7 +58,7 @@ export const columns: ColumnDef<UserDAO>[] = [
   },
 
   {
-    accessorKey: "image",
+    accessorKey: "emailVerified",
     header: ({ column }) => {
       return (
         <Button
@@ -64,11 +66,27 @@ export const columns: ColumnDef<UserDAO>[] = [
           className="pl-0 dark:text-white"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Image
+          Login
           <ArrowUpDown className="w-4 h-4 ml-1" />
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const data = row.original;
+
+      return (
+        <div className="flex items-center justify-center">          
+          {data.emailVerified ? (
+            <>
+            <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+            <p>{format(new Date(data.emailVerified), "PP", {locale: es})}</p>
+            </>
+            ) : (
+            <div className="w-4 h-4 rounded-full bg-red-500"></div>
+          )}
+        </div>
+      );
+    }
   },
 
   // {

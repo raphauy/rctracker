@@ -48,6 +48,41 @@ export async function getProjectsDAOBySlug(clientSlug: string) {
   return found as ProjectDAO[]
 }
 
+export async function filterProjects(clientSlug: string, from: Date, to: Date) {
+  console.log(from, to)
+  
+  const found = await prisma.project.findMany({
+    where: {
+      client: {
+        slug: clientSlug
+      }
+    },
+    orderBy: {
+      createdAt: 'desc'
+    },
+    include: {
+      client: true,
+      deliverables: {
+        include: {
+          tasks: {
+            include: {
+              developments: {
+                where: {
+                  date: {
+                    gte: from,
+                    lte: to
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+  return found as ProjectDAO[]
+}
+
 export async function getProjectDAO(id: string) {
   const found = await prisma.project.findUnique({
     where: {

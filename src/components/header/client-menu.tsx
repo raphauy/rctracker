@@ -22,6 +22,9 @@ export default async function ClientsMenu() {
                     <li className={`flex items-center border-b-first-color hover:border-b-first-color hover:border-b-2 h-11}`}>
                         <Link href={`/${slug}/billing`}><Button className="text-lg" variant="ghost">Billing</Button></Link>
                     </li>
+                    <li className={`flex items-center border-b-first-color hover:border-b-first-color hover:border-b-2 h-11}`}>
+                        <Link href={`/${slug}/pendings`}><Button className="text-lg" variant="ghost">Pendings</Button></Link>
+                    </li>
                 </ul>
             </nav>
 
