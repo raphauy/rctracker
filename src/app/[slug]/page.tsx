@@ -2,7 +2,7 @@ import { cookies } from "next/headers"
 
 import { getCurrentUser } from "@/lib/auth"
 import { getDeliverablesDAOByProjectId } from "@/services/deliverable-services"
-import { filterProjects } from "@/services/project-services"
+import { getProjectsDAOBySlug } from "@/services/project-services"
 import { FolderKanban } from "lucide-react"
 import { TaskComponent } from "./components/task"
 
@@ -21,7 +21,7 @@ export default async function Page({ searchParams, params }: Props) {
   if (!slug) {
     return null
   }
-  const projects= await filterProjects(slug)
+  const projects= await getProjectsDAOBySlug(slug)
   const data= projects.map((project) => ({
     label: project.name,
     id: project.id,
