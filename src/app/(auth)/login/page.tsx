@@ -6,11 +6,6 @@ import { redirect } from "next/navigation"
 import { UserAuthForm } from "./user-auth-form"
 import { getClientDAO } from "@/services/client-services"
 
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
-}
-
 export default async function AuthenticationPage() {
   const user= await getCurrentUser()
   const role= user?.role
