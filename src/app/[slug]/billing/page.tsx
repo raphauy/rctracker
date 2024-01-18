@@ -18,7 +18,7 @@ export default async function CostsPage({ params }: Props) {
   }
 
   return (
-    <div className="mt-10 w-full">
+    <div className="mt-10 w-full max-w-4xl">
       <p className="font-bold text-center text-3xl">Billing</p>
       <Billing slug={slug} />
     </div>

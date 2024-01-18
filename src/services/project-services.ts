@@ -49,7 +49,6 @@ export async function getProjectsDAOBySlug(clientSlug: string) {
 }
 
 export async function filterProjects(clientSlug: string, from: Date, to: Date) {
-  console.log(from, to)
   
   const found = await prisma.project.findMany({
     where: {
@@ -79,6 +78,36 @@ export async function filterProjects(clientSlug: string, from: Date, to: Date) {
         }
       }
     }
+  })
+  return found as ProjectDAO[]
+}
+
+export async function getNotFinishedProjects(clientSlug: string){
+  const found = await prisma.project.findMany({
+    where: {
+      client: {
+        slug: clientSlug
+      },
+    },
+    include: {
+      deliverables: {
+        include: {
+          tasks: {
+            include: {
+              developments: true
+            },
+            where: {
+              status: {
+                in: ['Active', 'Pending']                
+              }
+            }
+          }
+        }
+      }
+    },
+    orderBy: {
+      createdAt: 'desc'
+    },
   })
   return found as ProjectDAO[]
 }

@@ -47,6 +47,7 @@ export function Billing({ slug }: Props) {
         const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0)
         setFrom(firstDay)
         setTo(lastDay)
+        setIdSelected("")
         search(firstDay, lastDay)        
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
@@ -174,7 +175,7 @@ export function Billing({ slug }: Props) {
                                             return null
                                         }
                                         return (
-                                            <AccordionItem value={deliverable.name} key={deliverable.id}  className={cn(deliverable.id !== idSelected && "border-none", deliverable.id === idSelected && "bg-slate-50 pl-2 rounded-md border")}>
+                                            <AccordionItem value={deliverable.id} key={deliverable.id}  className={cn(deliverable.id !== idSelected && "border-none", deliverable.id === idSelected && "bg-slate-50 pl-2 rounded-md border")}>
                                                 <AccordionTrigger onClick={() => handleSelectId(deliverable.id)}>
                                                     <div className="flex flex-row justify-between w-full">
                                                         <p>{deliverable.name}</p>
