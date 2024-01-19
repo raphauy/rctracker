@@ -12,7 +12,7 @@ type Props = {
 export default async function PendinsPage({ params }: Props) {
   const slug = params.slug
   const projects= await getNotFinishedProjects(slug)
-  console.log(projects)  
+  
   return (
     <div className="w-full my-5 max-w-4xl">
       <p className="font-bold mb-10 text-center text-3xl">Pending tasks</p>
