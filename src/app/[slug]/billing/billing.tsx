@@ -139,12 +139,14 @@ export function Billing({ slug }: Props) {
         {
             projects.map((project) => {
                 let projectHours = 0
+                let projectValue = 0
                 // a project have deliverables and a deliverable have tasks and tasks have developments and developments have actualHours
                 // iterate over all the projects and sum the actualHours
                 project.deliverables.map((deliverable) => {
                     deliverable.tasks.map((task) => {
                         task.developments.map((development) => {
                             projectHours += development.actualHours
+                            projectValue += development.actualHours*deliverable.hourValue
                         })
                     })
                 })
@@ -153,14 +155,14 @@ export function Billing({ slug }: Props) {
                     return null
                 }
 
-                clientHours += projectHours
+                clientHours += projectHours                
 
                 return (
                     <AccordionItem value={project.name} key={project.id}>
                         <AccordionTrigger>
                             <div className="flex flex-row justify-between w-full">
                                 <p>{project.name}</p>
-                                <CostBox hours={projectHours} total={projectHours*project.deliverables[0].hourValue} />
+                                <CostBox hours={projectHours} total={projectValue} />
                             </div>
                         </AccordionTrigger>
                         <AccordionContent>
