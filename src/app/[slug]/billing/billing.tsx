@@ -25,7 +25,9 @@ export function Billing({ slug }: Props) {
     const [to, setTo] = useState<Date | undefined>(new Date())
 
     const [projects, setProjects] = useState<ProjectDAO[]>([])
-    const [price, setPrice] = useState(0)
+    // const [price, setPrice] = useState(0)
+
+    let totalValue= 0
   
     const [monthLabel, setMonthLabel] = useState("")
   
@@ -87,12 +89,12 @@ export function Billing({ slug }: Props) {
             const projectsWithValue= data.filter((project) => project.deliverables[0].hourValue > 0)
             console.log("projectsWithValue" + projectsWithValue)
             if (projectsWithValue.length < 1) {
-                toast({ title: "No hay datos", description: `No se encontraron proyectos a facturar` })
+                toast({ title: "Sin facturación", description: `No se encontraron proyectos a facturar` })
                 return
             }
             
             const price= projectsWithValue[0].deliverables[0].hourValue
-            setPrice(price)
+//            setPrice(price)
         })
         .catch((err) => {
           toast({ title: "Error al cargar los datos", description: `${err}`, variant: "destructive" })
@@ -158,7 +160,7 @@ export function Billing({ slug }: Props) {
                         <AccordionTrigger>
                             <div className="flex flex-row justify-between w-full">
                                 <p>{project.name}</p>
-                                <CostBox hours={projectHours} price={price} />
+                                <CostBox hours={projectHours} total={projectHours*project.deliverables[0].hourValue} />
                             </div>
                         </AccordionTrigger>
                         <AccordionContent>
@@ -179,7 +181,7 @@ export function Billing({ slug }: Props) {
                                                 <AccordionTrigger onClick={() => handleSelectId(deliverable.id)}>
                                                     <div className="flex flex-row justify-between w-full">
                                                         <p>{deliverable.name}</p>
-                                                        <CostBox hours={deliverableHours} price={price} />
+                                                        <CostBox hours={deliverableHours} total={deliverableHours*deliverable.hourValue} />
                                                     </div>
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -193,10 +195,11 @@ export function Billing({ slug }: Props) {
                                                                 if (taskHours === 0) {
                                                                     return null
                                                                 }
+                                                                totalValue+= taskHours*deliverable.hourValue
                                                                 return (
                                                                     <div className="flex justify-between w-full" key={task.id}>
                                                                         <p>{task.title}</p>
-                                                                        <CostBox hours={taskHours} price={price} />
+                                                                        <CostBox hours={taskHours} total={taskHours*deliverable.hourValue} />
                                                                     </div>
                                                                 )
                                                             })
@@ -217,7 +220,7 @@ export function Billing({ slug }: Props) {
         </Accordion>
         <div className="flex font-bold flex-row justify-between w-full pr-4 pt-4">
             <p>Total</p>
-            <CostBox hours={clientHours} price={price} />
+            <CostBox hours={clientHours} total={totalValue} />
         </div>
     </div>
     )
