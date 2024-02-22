@@ -6,13 +6,16 @@ import { getClientDAO, getClientsDAO } from "@/services/client-services";
 import ClientsMenu from "./client-menu";
 
 export default async function Menu() {
-    
+
     const user= await getCurrentUser()
 
-    if (!user) return <div></div>
+    if (!user) return <div>Debes estar logueado</div>
 
     const clients= await getClientsDAO()
     const selectorData: SelectorData[]= clients.map(client => ({slug: client.slug, name: client.name}))
+
+    if (user.role === "user")
+        return <div></div>
 
     if (user.role === "admin") 
         return (

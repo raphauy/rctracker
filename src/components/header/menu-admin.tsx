@@ -4,11 +4,11 @@ import Link from "next/link"
 import { Button } from "../ui/button"
 import { usePathname } from "next/navigation";
 
-const slug= "osom-digital"
-
 export default function MenuAdmin() {
 
     const path= usePathname()
+    const slug= path.split("/")[1]
+    if (!slug) return <div>Unauthorized</div>
 
     return (
         <div className="flex flex-1 gap-6 pl-5 md:gap-5 ">

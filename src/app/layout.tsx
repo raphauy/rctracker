@@ -38,7 +38,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <div className="container relative flex flex-col min-h-screen mt-1 text-muted-foreground">
-                <Header><Menu /></Header> 
+                <Header><Menu /></Header>
 
                 <div className="flex flex-col items-center flex-1">
                   {children}

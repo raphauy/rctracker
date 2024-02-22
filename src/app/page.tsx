@@ -11,7 +11,9 @@ export default async function Home() {
   if (!currentUser) 
     redirect('/login')
 
-  if (currentUser.role === 'admin') {
+  if (currentUser.role === 'user') {
+    return <div>Unauthorized</div>
+  } else if (currentUser.role === 'admin') {
     redirect('/admin')
   }else {
     const client= await getClientDAO(currentUser.clientId)
