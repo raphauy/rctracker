@@ -25,7 +25,7 @@ export function Billing({ slug }: Props) {
     const [to, setTo] = useState<Date | undefined>(new Date())
 
     const [projects, setProjects] = useState<ProjectDAO[]>([])
-    const [price, setPrice] = useState(20)
+    const [price, setPrice] = useState(0)
   
     const [monthLabel, setMonthLabel] = useState("")
   
@@ -91,8 +91,8 @@ export function Billing({ slug }: Props) {
                 return
             }
             
-          const price= projectsWithValue[0].deliverables[0].hourValue
-          setPrice(price)
+            const price= projectsWithValue[0].deliverables[0].hourValue
+            setPrice(price)
         })
         .catch((err) => {
           toast({ title: "Error al cargar los datos", description: `${err}`, variant: "destructive" })
@@ -217,7 +217,7 @@ export function Billing({ slug }: Props) {
         </Accordion>
         <div className="flex font-bold flex-row justify-between w-full pr-4 pt-4">
             <p>Total</p>
-            <CostBox hours={clientHours} price={20} />
+            <CostBox hours={clientHours} price={price} />
         </div>
     </div>
     )
