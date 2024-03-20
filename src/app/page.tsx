@@ -11,7 +11,7 @@ export default async function Home() {
   if (!currentUser) 
     redirect('/login')
 
-  if (currentUser.role === 'user') {
+  if (currentUser.role !== 'admin' && currentUser.role !== 'client') {
     return <div>Unauthorized</div>
   } else if (currentUser.role === 'admin') {
     redirect('/admin')

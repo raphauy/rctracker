@@ -5,6 +5,7 @@ import { getDeliverablesDAOByProjectId } from "@/services/deliverable-services"
 import { getProjectsDAOBySlug } from "@/services/project-services"
 import { FolderKanban } from "lucide-react"
 import { TaskComponent } from "./components/task"
+import { redirect } from "next/navigation"
 
 type Props = {
   searchParams: {
@@ -17,6 +18,14 @@ type Props = {
 }
 
 export default async function Page({ searchParams, params }: Props) {
+
+  const currentUser= await getCurrentUser()
+  if (!currentUser) 
+    redirect('/login')
+
+  if (currentUser.role !== 'admin' && currentUser.role !== 'client')
+    return <div>Unauthorized</div>
+
   const slug= params.slug
   if (!slug) {
     return null
@@ -32,7 +41,6 @@ export default async function Page({ searchParams, params }: Props) {
   if (!projectId && projects.length > 0) {
     projectId= projects[0].id
   }
-  const currentUser= await getCurrentUser()
   let isAdmin= false
   if (currentUser?.role === "admin") {
     isAdmin= true
