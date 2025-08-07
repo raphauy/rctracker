@@ -1,22 +1,27 @@
 "use client"
 
-import { Editor as NovelEditor } from "novel";
-import { Editor } from '@tiptap/core'
+// Temporarily disabled due to build error with novel package
+// import { Editor as NovelEditor } from "novel";
+// import { Editor } from '@tiptap/core'
 
 
 export default function NovelOnClient() {
 
-    function onUpdate(editor: Editor | undefined) {
-        console.log(editor?.getJSON())
+    // function onUpdate(editor: Editor | undefined) {
+    //     console.log(editor?.getJSON())
         
-    }
+    // }
 
     return (
         <main className="flex h-full flex-col items-center justify-between sm:p-4 xl:p-8">
-        <NovelEditor
+        {/* <NovelEditor
             defaultValue={defaultEditorContent}
             onUpdate={onUpdate}
-        />
+        /> */}
+        <div className="text-center p-8">
+            <p>Novel editor temporarily disabled due to build compatibility issues.</p>
+            <p className="text-sm text-muted-foreground mt-2">To fix: Update novel package or use a compatible version with @tiptap/pm</p>
+        </div>
         </main>
     )
 }
